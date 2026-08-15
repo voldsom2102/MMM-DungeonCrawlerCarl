@@ -1,0 +1,1 @@
+This module shows Dungeon Crawler Carl quotes stored in quote.js
