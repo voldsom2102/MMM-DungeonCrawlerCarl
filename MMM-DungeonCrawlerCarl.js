@@ -5,7 +5,7 @@ Module.register("MMM-DungeonCrawlerCarl", {
         quoteInterval: 60000,
         fadeOutSpeed: 1000,
         fadeInSpeed: 1000,
-        books: "all"
+        maxBook: 8
     },
 
     getScripts: function () {
