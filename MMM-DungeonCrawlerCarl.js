@@ -3,7 +3,8 @@ Module.register("MMM-DungeonCrawlerCarl", {
         showCharacter: true,
         showBook: true,
         quoteInterval: 60000,
-        fadeSpeed: 1000
+        fadeOutSpeed: 1000,
+        fadeInSpeed: 1000
     },
 
     getScripts: function () {
@@ -42,45 +43,57 @@ Module.register("MMM-DungeonCrawlerCarl", {
         return DCC_QUOTES[randomIndex];
     },
 
-    changeQuote: function () {
-        var self = this;
-        var quoteContainer = document.querySelector(
-            ".dcc-quote"
-        );
+changeQuote: function () {
+    var self = this;
+    var quoteContainer = document.querySelector(
+        ".dcc-quote"
+    );
 
-        if (!quoteContainer) {
-            return;
-        }
+    if (!quoteContainer) {
+        return;
+    }
 
-        // Fade out
-        quoteContainer.classList.add("dcc-fade-out");
+    // Fade out
+    quoteContainer.style.transition =
+        "opacity " + this.config.fadeOutSpeed + "ms ease-in-out";
 
+    quoteContainer.style.opacity = "0";
+
+    setTimeout(function () {
+
+        // Select the new quote
+        self.currentQuote = self.getRandomQuote();
+
+        // Rebuild the quote
+        self.updateDom(0);
+
+        // Get the newly created container
         setTimeout(function () {
-            // Select the new quote
-            self.currentQuote = self.getRandomQuote();
+            var newQuoteContainer = document.querySelector(
+                ".dcc-quote"
+            );
 
-            // Rebuild the quote
-            self.updateDom(0);
+            if (newQuoteContainer) {
 
-            // Fade back in
-            setTimeout(function () {
-                var newQuoteContainer = document.querySelector(
-                    ".dcc-quote"
-                );
+                // Start invisible
+                newQuoteContainer.style.opacity = "0";
 
-                if (newQuoteContainer) {
-                    newQuoteContainer.classList.add("dcc-fade-in");
+                // Set the fade-in speed
+                newQuoteContainer.style.transition =
+                    "opacity " +
+                    self.config.fadeInSpeed +
+                    "ms ease-in-out";
 
-                    setTimeout(function () {
-                        newQuoteContainer.classList.remove(
-                            "dcc-fade-in"
-                        );
-                    }, self.config.fadeSpeed);
-                }
-            }, 50);
+                // Trigger the fade-in
+                setTimeout(function () {
+                    newQuoteContainer.style.opacity = "1";
+                }, 50);
+            }
 
-        }, self.config.fadeSpeed);
-    },
+        }, 50);
+
+    }, this.config.fadeOutSpeed);
+},
 
     getDom: function () {
         var wrapper = document.createElement("div");
