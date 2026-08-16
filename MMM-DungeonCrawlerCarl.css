@@ -1,10 +1,3 @@
-.dcc-quote-text {
-    font-size: 32px;
-    font-style: italic;
-    line-height: 1.4;
-    margin-bottom: 15px;
-}
-
 .dcc-character {
     font-size: 22px;
     margin-bottom: 5px;
@@ -17,6 +10,20 @@
 
 .dcc-quote {
     text-align: center;
-    max-width: 800px;
+    width: 80vw;
+    max-width: 1000px;
+    margin: 0 auto;
     opacity: 1;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.dcc-quote-text {
+    font-size: 32px;
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
