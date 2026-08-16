@@ -148,7 +148,7 @@ allows quotes from Books 1, 2, and 3.
 maxBook: 7
 ```
 allows quotes from Books 1 through 7.
-You can set `maxBook` higher than the books currently represented in `quote.js`. The module will automatically use whatever quotes are currently available.
+You can set `maxBook` higher than the books currently represented in `quote.js`. The module will automatically use whatever quotes are currently available. bookNumber is optional. If omitted, the quote is treated as a Book 1 quote.
 For example, if you have only entered quotes through Book 3:
 ```javascript
 maxBook: 7
