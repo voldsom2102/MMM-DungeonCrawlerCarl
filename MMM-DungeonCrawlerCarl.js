@@ -3,6 +3,9 @@ Module.register("MMM-DungeonCrawlerCarl", {
         showCharacter: true,
         showBook: true,
         quoteInterval: 60000,
+        quoteWidth: "80vw",
+        maxQuoteWidth: "1000px",
+        fontSize: "32px",
         fadeOutSpeed: 1000,
         fadeInSpeed: 1000,
         maxBook: 8
