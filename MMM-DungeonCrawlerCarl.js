@@ -4,7 +4,8 @@ Module.register("MMM-DungeonCrawlerCarl", {
         showBook: true,
         quoteInterval: 60000,
         fadeOutSpeed: 1000,
-        fadeInSpeed: 1000
+        fadeInSpeed: 1000,
+        books: "all"
     },
 
     getScripts: function () {
@@ -29,19 +30,38 @@ Module.register("MMM-DungeonCrawlerCarl", {
         }, this.config.quoteInterval);
     },
 
-    getRandomQuote: function () {
-        var randomIndex;
+getRandomQuote: function () {
+    var availableQuotes = this.getAvailableQuotes();
 
-        if (DCC_QUOTES.length === 1) {
-            return DCC_QUOTES[0];
-        }
+    // Make sure we have quotes available
+    if (availableQuotes.length === 0) {
+        Log.error(
+            "MMM-DungeonCrawlerCarl: No quotes available for the selected books."
+        );
 
-        do {
-            randomIndex = Math.floor(Math.random() * DCC_QUOTES.length);
-        } while (DCC_QUOTES[randomIndex] === this.currentQuote);
+        return {
+            text: "No quotes available.",
+            character: "",
+            book: ""
+        };
+    }
 
-        return DCC_QUOTES[randomIndex];
-    },
+    // Only one quote available
+    if (availableQuotes.length === 1) {
+        return availableQuotes[0];
+    }
+
+    var randomIndex;
+
+    // Don't immediately repeat the current quote
+    do {
+        randomIndex = Math.floor(
+            Math.random() * availableQuotes.length
+        );
+    } while (availableQuotes[randomIndex] === this.currentQuote);
+
+    return availableQuotes[randomIndex];
+},
 
 changeQuote: function () {
     var self = this;
@@ -107,6 +127,18 @@ updateQuoteContents: function (wrapper) {
         book.innerHTML = quote.book;
         wrapper.appendChild(book);
     }
+},
+
+getAvailableQuotes: function () {
+    // Show everything
+    if (this.config.books === "all") {
+        return DCC_QUOTES;
+    }
+
+    // Show only selected books
+    return DCC_QUOTES.filter(function (quote) {
+        return this.config.books.indexOf(quote.bookNumber) !== -1;
+    }, this);
 },
 
 getDom: function () {
