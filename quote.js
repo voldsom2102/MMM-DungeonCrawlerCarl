@@ -2,19 +2,18 @@ var DCC_QUOTES = [
     {
         text: "Goddammit Donut!",
         character: "Carl",
-        book: "Dungeon Crawler Carl",
-        bookNumber: 1
+        book: "Dungeon Crawler Carl"
     },
     {
         text: "He screamed, right in my fucking face",
         character: "Carl",
         book: "Dungeon Crawler Carl",
-        bookNumber: 1
+        bookNumber: 2
     },
     {
         text: "Mongo is appaled",
         character: "Donut",
         book: "The Butcher's Masqurade",
-        bookNumber: 2
+        bookNumber: 5
     }
 ];

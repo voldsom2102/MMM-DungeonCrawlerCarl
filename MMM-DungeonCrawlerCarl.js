@@ -1,19 +1,19 @@
 Module.register("MMM-DungeonCrawlerCarl", {
-defaults: {
-    showCharacter: true,
-    showBook: true,
-    quoteInterval: 60000,
-    fadeOutSpeed: 1000,
-    fadeInSpeed: 1000,
-    maxBook: 8,
-    quoteWidth: "80vw",
-    minQuoteWidth: "300px",
-    maxQuoteWidth: "1000px",
-    quoteFontSize: "32px",
-    characterFontSize: "22px",
-    bookFontSize: "18px",
-    lineHeight: "1.4"
-},
+    defaults: {
+        showCharacter: true,
+        showBook: true,
+        quoteInterval: 60000,
+        fadeOutSpeed: 1000,
+        fadeInSpeed: 1000,
+        maxBook: 8,
+        quoteWidth: "80vw",
+        minQuoteWidth: "300px",
+        maxQuoteWidth: "1000px",
+        quoteFontSize: "32px",
+        characterFontSize: "22px",
+        bookFontSize: "18px",
+        lineHeight: "1.4"
+    },
 
     getScripts: function () {
         return [
@@ -37,204 +37,183 @@ defaults: {
         }, this.config.quoteInterval);
     },
 
-getRandomQuote: function () {
-    var availableQuotes = this.getAvailableQuotes();
+    getRandomQuote: function () {
+        var availableQuotes = this.getAvailableQuotes();
 
-    // Make sure we have quotes available
-    if (availableQuotes.length === 0) {
-        Log.error(
-            "MMM-DungeonCrawlerCarl: No quotes available for the selected books."
-        );
+        // Make sure we have quotes available
+        if (availableQuotes.length === 0) {
+            Log.error(
+                "MMM-DungeonCrawlerCarl: No quotes available for the selected books."
+            );
 
-        return {
-            text: "No quotes available.",
-            character: "",
-            book: ""
-        };
-    }
+            return {
+                text: "No quotes available.",
+                character: "",
+                book: ""
+            };
+        }
 
-    // Only one quote available
-    if (availableQuotes.length === 1) {
-        return availableQuotes[0];
-    }
+        // Only one quote available
+        if (availableQuotes.length === 1) {
+            return availableQuotes[0];
+        }
 
-    var randomIndex;
+        var randomIndex;
 
-    // Don't immediately repeat the current quote
-    do {
-        randomIndex = Math.floor(
-            Math.random() * availableQuotes.length
-        );
-    } while (availableQuotes[randomIndex] === this.currentQuote);
+        // Don't immediately repeat the current quote
+        do {
+            randomIndex = Math.floor(
+                Math.random() * availableQuotes.length
+            );
+        } while (availableQuotes[randomIndex] === this.currentQuote);
 
-    return availableQuotes[randomIndex];
-},
+        return availableQuotes[randomIndex];
+    },
 
-changeQuote: function () {
-    var self = this;
-    var quoteContainer = document.querySelector(".dcc-quote");
+    changeQuote: function () {
+        var self = this;
+        var quoteContainer = document.querySelector(".dcc-quote");
 
-    if (!quoteContainer) {
-        return;
-    }
+        if (!quoteContainer) {
+            return;
+        }
 
-    // Fade out
-    quoteContainer.style.transition =
-        "opacity " + this.config.fadeOutSpeed + "ms ease-in-out";
+        // Fade out
+        quoteContainer.style.transition =
+            "opacity " + this.config.fadeOutSpeed + "ms ease-in-out";
 
-    quoteContainer.style.opacity = "0";
+        quoteContainer.style.opacity = "0";
 
-    // Wait for the fade-out to finish
-    setTimeout(function () {
+        // Wait for the fade-out to finish
+        setTimeout(function () {
 
-        // Select the next quote
-        self.currentQuote = self.getRandomQuote();
+            // Select the next quote
+            self.currentQuote = self.getRandomQuote();
 
-        // Update the contents while invisible
-        self.updateQuoteContents(quoteContainer);
+            // Update the contents while invisible
+            self.updateQuoteContents(quoteContainer);
 
-        // Make sure the browser renders the element at opacity 0
-        requestAnimationFrame(function () {
-
-            // Set the fade-in transition
-            quoteContainer.style.transition =
-                "opacity " + self.config.fadeInSpeed + "ms ease-in-out";
-
-            // Force the browser to recognize the current opacity
+            // Make sure the browser renders the element at opacity 0
             requestAnimationFrame(function () {
 
-                // Fade in
-                quoteContainer.style.opacity = "1";
+                // Set the fade-in transition
+                quoteContainer.style.transition =
+                    "opacity " + self.config.fadeInSpeed + "ms ease-in-out";
+
+                // Force the browser to recognize the current opacity
+                requestAnimationFrame(function () {
+
+                    // Fade in
+                    quoteContainer.style.opacity = "1";
+                });
             });
-        });
 
-    }, this.config.fadeOutSpeed);
-},
+        }, this.config.fadeOutSpeed);
+    },
 
-updateQuoteContents: function (wrapper) {
-    var quote = this.currentQuote;
+    updateQuoteContents: function (wrapper) {
+        var quote = this.currentQuote;
 
-    wrapper.innerHTML = "";
+        wrapper.innerHTML = "";
 
-    var quoteText = document.createElement("div");
-    quoteText.className = "dcc-quote-text";
-    quoteText.innerHTML = "&quot;" + quote.text + "&quot;";
-    wrapper.appendChild(quoteText);
+        var quoteText = document.createElement("div");
+        quoteText.className = "dcc-quote-text";
+        quoteText.innerHTML = "&quot;" + quote.text + "&quot;";
+        wrapper.appendChild(quoteText);
 
-    if (this.config.showCharacter) {
-        var character = document.createElement("div");
-        character.className = "dcc-character";
-        character.innerHTML = "— " + quote.character;
-        wrapper.appendChild(character);
-    }
+        if (this.config.showCharacter) {
+            var character = document.createElement("div");
+            character.className = "dcc-character";
+            character.innerHTML = "— " + quote.character;
+            wrapper.appendChild(character);
+        }
 
-    if (this.config.showBook) {
-        var book = document.createElement("div");
-        book.className = "dcc-book";
-        book.innerHTML = quote.book;
-        wrapper.appendChild(book);
-    }
-},
+        if (this.config.showBook) {
+            var book = document.createElement("div");
+            book.className = "dcc-book";
+            book.innerHTML = quote.book;
+            wrapper.appendChild(book);
+        }
+    },
 
-getAvailableQuotes: function () {
-    // Make sure we have quotes
-    if (!DCC_QUOTES || DCC_QUOTES.length === 0) {
-        Log.error(
-            "MMM-DungeonCrawlerCarl: No quotes found in quote.js."
-        );
+    getAvailableQuotes: function () {
+        // Make sure we have quotes
+        if (!DCC_QUOTES || DCC_QUOTES.length === 0) {
+            Log.error(
+                "MMM-DungeonCrawlerCarl: No quotes found in quote.js."
+            );
 
-        return [];
-    }
+            return [];
+        }
 
-    // Convert maxBook to a number
-    var maxBook = Number(this.config.maxBook);
+        // Convert maxBook to a number
+        var maxBook = Number(this.config.maxBook);
 
-    // If maxBook is invalid, default to Book 1
-    if (!Number.isFinite(maxBook) || maxBook < 1) {
-        Log.warn(
-            "MMM-DungeonCrawlerCarl: Invalid maxBook value. Defaulting to Book 1."
-        );
+        // If maxBook is invalid, default to Book 1
+        if (!Number.isFinite(maxBook) || maxBook < 1) {
+            Log.warn(
+                "MMM-DungeonCrawlerCarl: Invalid maxBook value. Defaulting to Book 1."
+            );
 
-        maxBook = 1;
-    }
+            maxBook = 1;
+        }
 
-    // Find the highest book number currently available
-    var highestAvailableBook = DCC_QUOTES.reduce(
-        function (highest, quote) {
+        // Return quotes whose book number is at or below maxBook.
+        // If bookNumber is missing, treat it as Book 1.
+        return DCC_QUOTES.filter(function (quote) {
             var bookNumber = Number(quote.bookNumber);
 
-            if (Number.isFinite(bookNumber) && bookNumber > highest) {
-                return bookNumber;
+            if (!Number.isFinite(bookNumber) || bookNumber < 1) {
+                bookNumber = 1;
             }
 
-            return highest;
-        },
-        0
-    );
+            return bookNumber <= maxBook;
+        });
+    },
 
-    // If maxBook is higher than our quote database,
-    // simply use all available books.
-    if (maxBook > highestAvailableBook) {
-        Log.info(
-            "MMM-DungeonCrawlerCarl: maxBook is " +
-            maxBook +
-            ", but quotes are currently available only through Book " +
-            highestAvailableBook +
-            ". Using available quotes."
+    getDom: function () {
+        var wrapper = document.createElement("div");
+        wrapper.className = "dcc-quote";
+
+        wrapper.style.setProperty(
+            "--dcc-quote-width",
+            this.config.quoteWidth
         );
 
-        maxBook = highestAvailableBook;
-    }
+        wrapper.style.setProperty(
+            "--dcc-min-quote-width",
+            this.config.minQuoteWidth
+        );
 
-    // Return quotes from Book 1 through maxBook
-    return DCC_QUOTES.filter(function (quote) {
-        return Number(quote.bookNumber) <= maxBook;
-    });
-},
+        wrapper.style.setProperty(
+            "--dcc-max-quote-width",
+            this.config.maxQuoteWidth
+        );
 
-getDom: function () {
-    var wrapper = document.createElement("div");
-    wrapper.className = "dcc-quote";
+        wrapper.style.setProperty(
+            "--dcc-quote-font-size",
+            this.config.quoteFontSize
+        );
 
-    wrapper.style.setProperty(
-        "--dcc-quote-width",
-        this.config.quoteWidth
-    );
+        wrapper.style.setProperty(
+            "--dcc-character-font-size",
+            this.config.characterFontSize
+        );
 
-    wrapper.style.setProperty(
-        "--dcc-min-quote-width",
-        this.config.minQuoteWidth
-    );
+        wrapper.style.setProperty(
+            "--dcc-book-font-size",
+            this.config.bookFontSize
+        );
 
-    wrapper.style.setProperty(
-        "--dcc-max-quote-width",
-        this.config.maxQuoteWidth
-    );
+        wrapper.style.setProperty(
+            "--dcc-line-height",
+            this.config.lineHeight
+        );
 
-    wrapper.style.setProperty(
-        "--dcc-quote-font-size",
-        this.config.quoteFontSize
-    );
+        this.updateQuoteContents(wrapper);
 
-    wrapper.style.setProperty(
-        "--dcc-character-font-size",
-        this.config.characterFontSize
-    );
-
-    wrapper.style.setProperty(
-        "--dcc-book-font-size",
-        this.config.bookFontSize
-    );
-
-    wrapper.style.setProperty(
-        "--dcc-line-height",
-        this.config.lineHeight
-    );
-
-    this.updateQuoteContents(wrapper);
-
-    return wrapper;
-},
+        return wrapper;
+    },
 
     getStyles: function () {
         return [
