@@ -45,9 +45,7 @@ Module.register("MMM-DungeonCrawlerCarl", {
 
 changeQuote: function () {
     var self = this;
-    var quoteContainer = document.querySelector(
-        ".dcc-quote"
-    );
+    var quoteContainer = document.querySelector(".dcc-quote");
 
     if (!quoteContainer) {
         return;
@@ -59,69 +57,66 @@ changeQuote: function () {
 
     quoteContainer.style.opacity = "0";
 
+    // Wait for the fade-out to finish
     setTimeout(function () {
 
-        // Select the new quote
+        // Select the next quote
         self.currentQuote = self.getRandomQuote();
 
-        // Rebuild the quote
-        self.updateDom(0);
+        // Update the contents while invisible
+        self.updateQuoteContents(quoteContainer);
 
-        // Get the newly created container
-        setTimeout(function () {
-            var newQuoteContainer = document.querySelector(
-                ".dcc-quote"
-            );
+        // Make sure the browser renders the element at opacity 0
+        requestAnimationFrame(function () {
 
-            if (newQuoteContainer) {
+            // Set the fade-in transition
+            quoteContainer.style.transition =
+                "opacity " + self.config.fadeInSpeed + "ms ease-in-out";
 
-                // Start invisible
-                newQuoteContainer.style.opacity = "0";
+            // Force the browser to recognize the current opacity
+            requestAnimationFrame(function () {
 
-                // Set the fade-in speed
-                newQuoteContainer.style.transition =
-                    "opacity " +
-                    self.config.fadeInSpeed +
-                    "ms ease-in-out";
-
-                // Trigger the fade-in
-                setTimeout(function () {
-                    newQuoteContainer.style.opacity = "1";
-                }, 50);
-            }
-
-        }, 50);
+                // Fade in
+                quoteContainer.style.opacity = "1";
+            });
+        });
 
     }, this.config.fadeOutSpeed);
 },
 
-    getDom: function () {
-        var wrapper = document.createElement("div");
-        wrapper.className = "dcc-quote";
+updateQuoteContents: function (wrapper) {
+    var quote = this.currentQuote;
 
-        var quote = this.currentQuote;
+    wrapper.innerHTML = "";
 
-        var quoteText = document.createElement("div");
-        quoteText.className = "dcc-quote-text";
-        quoteText.innerHTML = "&quot;" + quote.text + "&quot;";
-        wrapper.appendChild(quoteText);
+    var quoteText = document.createElement("div");
+    quoteText.className = "dcc-quote-text";
+    quoteText.innerHTML = "&quot;" + quote.text + "&quot;";
+    wrapper.appendChild(quoteText);
 
-        if (this.config.showCharacter) {
-            var character = document.createElement("div");
-            character.className = "dcc-character";
-            character.innerHTML = "— " + quote.character;
-            wrapper.appendChild(character);
-        }
+    if (this.config.showCharacter) {
+        var character = document.createElement("div");
+        character.className = "dcc-character";
+        character.innerHTML = "— " + quote.character;
+        wrapper.appendChild(character);
+    }
 
-        if (this.config.showBook) {
-            var book = document.createElement("div");
-            book.className = "dcc-book";
-            book.innerHTML = quote.book;
-            wrapper.appendChild(book);
-        }
+    if (this.config.showBook) {
+        var book = document.createElement("div");
+        book.className = "dcc-book";
+        book.innerHTML = quote.book;
+        wrapper.appendChild(book);
+    }
+},
 
-        return wrapper;
-    },
+getDom: function () {
+    var wrapper = document.createElement("div");
+    wrapper.className = "dcc-quote";
+
+    this.updateQuoteContents(wrapper);
+
+    return wrapper;
+},
 
     getStyles: function () {
         return [
