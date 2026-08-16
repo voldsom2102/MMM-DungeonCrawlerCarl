@@ -130,15 +130,11 @@ updateQuoteContents: function (wrapper) {
 },
 
 getAvailableQuotes: function () {
-    // Show everything
-    if (this.config.books === "all") {
-        return DCC_QUOTES;
-    }
 
-    // Show only selected books
     return DCC_QUOTES.filter(function (quote) {
-        return this.config.books.indexOf(quote.bookNumber) !== -1;
+        return quote.bookNumber <= this.config.maxBook;
     }, this);
+
 },
 
 getDom: function () {
