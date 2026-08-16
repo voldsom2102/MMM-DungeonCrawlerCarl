@@ -14,7 +14,7 @@
 }
 
 .dcc-quote-text {
-    font-size: var(--dcc-font-size);
+    font-size: var(--dcc-quote-font-size);
     font-style: italic;
     line-height: var(--dcc-line-height);
 
@@ -26,11 +26,11 @@
 }
 
 .dcc-character {
-    font-size: 22px;
+    font-size: var(--dcc-character-font-size);
     margin-bottom: 5px;
 }
 
 .dcc-book {
-    font-size: 18px;
+    font-size: var(--dcc-book-font-size);
     opacity: 0.7;
 }
