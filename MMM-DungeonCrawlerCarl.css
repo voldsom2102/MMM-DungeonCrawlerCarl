@@ -23,10 +23,10 @@
 
 .dcc-fade-out {
     opacity: 0;
-    transition: opacity 1000ms ease-in-out;
+    transition: opacity 2000ms ease-in-out;
 }
 
 .dcc-fade-in {
     opacity: 1;
-    transition: opacity 1000ms ease-in-out;
+    transition: opacity 2000ms ease-in-out;
 }
