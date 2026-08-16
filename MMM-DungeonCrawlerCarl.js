@@ -144,6 +144,31 @@ getDom: function () {
     var wrapper = document.createElement("div");
     wrapper.className = "dcc-quote";
 
+    wrapper.style.setProperty(
+        "--dcc-quote-width",
+        this.config.quoteWidth
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-min-quote-width",
+        this.config.minQuoteWidth
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-max-quote-width",
+        this.config.maxQuoteWidth
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-font-size",
+        this.config.fontSize
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-line-height",
+        this.config.lineHeight
+    );
+
     this.updateQuoteContents(wrapper);
 
     return wrapper;
