@@ -4,6 +4,12 @@ Module.register("MMM-DungeonCrawlerCarl", {
         showBook: true
     },
 
+    getScripts: function () {
+        return [
+            this.file("quote.js")
+        ];
+    },
+
     start: function () {
         Log.info("Starting module: MMM-DungeonCrawlerCarl");
     },
@@ -12,22 +18,25 @@ Module.register("MMM-DungeonCrawlerCarl", {
         var wrapper = document.createElement("div");
         wrapper.className = "dcc-quote";
 
+        // Get the first quote from quote.js
+        var quote = DCC_QUOTES[0];
+
         var quoteText = document.createElement("div");
         quoteText.className = "dcc-quote-text";
-        quoteText.innerHTML = "&quot;Goddammit Donut!&quot;";
+        quoteText.innerHTML = "&quot;" + quote.text + "&quot;";
         wrapper.appendChild(quoteText);
 
         if (this.config.showCharacter) {
             var character = document.createElement("div");
             character.className = "dcc-character";
-            character.innerHTML = "— Carl";
+            character.innerHTML = "— " + quote.character;
             wrapper.appendChild(character);
         }
 
         if (this.config.showBook) {
             var book = document.createElement("div");
             book.className = "dcc-book";
-            book.innerHTML = "Dungeon Crawler Carl";
+            book.innerHTML = quote.book;
             wrapper.appendChild(book);
         }
 
