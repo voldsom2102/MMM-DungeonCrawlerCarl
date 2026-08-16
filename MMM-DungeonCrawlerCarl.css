@@ -22,7 +22,6 @@
 
     white-space: normal;
     overflow-wrap: var(--dcc-word-wrap);
-    word-break: normal;
 }
 
 .dcc-character {
