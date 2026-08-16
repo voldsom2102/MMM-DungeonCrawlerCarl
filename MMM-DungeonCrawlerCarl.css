@@ -1,3 +1,30 @@
+.dcc-quote {
+    text-align: center;
+
+    width: var(--dcc-quote-width);
+    min-width: var(--dcc-min-quote-width);
+    max-width: var(--dcc-max-quote-width);
+
+    margin: 0 auto;
+
+    opacity: 1;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.dcc-quote-text {
+    font-size: var(--dcc-font-size);
+    font-style: italic;
+    line-height: var(--dcc-line-height);
+
+    margin-bottom: 15px;
+
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
 .dcc-character {
     font-size: 22px;
     margin-bottom: 5px;
@@ -6,24 +33,4 @@
 .dcc-book {
     font-size: 18px;
     opacity: 0.7;
-}
-
-.dcc-quote {
-    text-align: center;
-    width: 80vw;
-    max-width: 1000px;
-    margin: 0 auto;
-    opacity: 1;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
-
-.dcc-quote-text {
-    font-size: 32px;
-    font-style: italic;
-    line-height: 1.4;
-    margin-bottom: 15px;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
 }
