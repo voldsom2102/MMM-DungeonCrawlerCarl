@@ -2,7 +2,8 @@ Module.register("MMM-DungeonCrawlerCarl", {
     defaults: {
         showCharacter: true,
         showBook: true,
-        quoteInterval: 60000
+        quoteInterval: 60000,
+        fadeSpeed: 1000
     },
 
     getScripts: function () {
@@ -14,9 +15,8 @@ Module.register("MMM-DungeonCrawlerCarl", {
     start: function () {
         Log.info("Starting module: MMM-DungeonCrawlerCarl");
 
-        this.currentQuote = null;
+        this.currentQuote = this.getRandomQuote();
 
-        // Change the quote at the configured interval
         this.scheduleUpdate();
     },
 
@@ -24,33 +24,69 @@ Module.register("MMM-DungeonCrawlerCarl", {
         var self = this;
 
         setInterval(function () {
-            self.updateDom();
+            self.changeQuote();
         }, this.config.quoteInterval);
     },
 
     getRandomQuote: function () {
         var randomIndex;
 
-        // If there is only one quote, just return it
         if (DCC_QUOTES.length === 1) {
             return DCC_QUOTES[0];
         }
 
-        // Pick a new quote that isn't the current quote
         do {
             randomIndex = Math.floor(Math.random() * DCC_QUOTES.length);
         } while (DCC_QUOTES[randomIndex] === this.currentQuote);
 
-        this.currentQuote = DCC_QUOTES[randomIndex];
+        return DCC_QUOTES[randomIndex];
+    },
 
-        return this.currentQuote;
+    changeQuote: function () {
+        var self = this;
+        var quoteContainer = document.querySelector(
+            ".dcc-quote"
+        );
+
+        if (!quoteContainer) {
+            return;
+        }
+
+        // Fade out
+        quoteContainer.classList.add("dcc-fade-out");
+
+        setTimeout(function () {
+            // Select the new quote
+            self.currentQuote = self.getRandomQuote();
+
+            // Rebuild the quote
+            self.updateDom(0);
+
+            // Fade back in
+            setTimeout(function () {
+                var newQuoteContainer = document.querySelector(
+                    ".dcc-quote"
+                );
+
+                if (newQuoteContainer) {
+                    newQuoteContainer.classList.add("dcc-fade-in");
+
+                    setTimeout(function () {
+                        newQuoteContainer.classList.remove(
+                            "dcc-fade-in"
+                        );
+                    }, self.config.fadeSpeed);
+                }
+            }, 50);
+
+        }, self.config.fadeSpeed);
     },
 
     getDom: function () {
         var wrapper = document.createElement("div");
         wrapper.className = "dcc-quote";
 
-        var quote = this.getRandomQuote();
+        var quote = this.currentQuote;
 
         var quoteText = document.createElement("div");
         quoteText.className = "dcc-quote-text";
