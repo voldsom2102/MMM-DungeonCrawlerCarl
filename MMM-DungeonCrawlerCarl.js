@@ -12,8 +12,7 @@ Module.register("MMM-DungeonCrawlerCarl", {
         quoteFontSize: "32px",
         characterFontSize: "22px",
         bookFontSize: "18px",
-        lineHeight: "1.4",
-        wordWrap: "normal"
+        lineHeight: "1.4"
     },
 
     getScripts: function () {
