@@ -1,15 +1,19 @@
 Module.register("MMM-DungeonCrawlerCarl", {
-    defaults: {
-        showCharacter: true,
-        showBook: true,
-        quoteInterval: 60000,
-        quoteWidth: "80vw",
-        maxQuoteWidth: "1000px",
-        fontSize: "32px",
-        fadeOutSpeed: 1000,
-        fadeInSpeed: 1000,
-        maxBook: 8
-    },
+defaults: {
+    showCharacter: true,
+    showBook: true,
+    quoteInterval: 60000,
+    fadeOutSpeed: 1000,
+    fadeInSpeed: 1000,
+    maxBook: 8,
+    quoteWidth: "80vw",
+    minQuoteWidth: "300px",
+    maxQuoteWidth: "1000px",
+    quoteFontSize: "32px",
+    characterFontSize: "22px",
+    bookFontSize: "18px",
+    lineHeight: "1.4"
+},
 
     getScripts: function () {
         return [
@@ -160,8 +164,18 @@ getDom: function () {
     );
 
     wrapper.style.setProperty(
-        "--dcc-font-size",
-        this.config.fontSize
+        "--dcc-quote-font-size",
+        this.config.quoteFontSize
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-character-font-size",
+        this.config.characterFontSize
+    );
+
+    wrapper.style.setProperty(
+        "--dcc-book-font-size",
+        this.config.bookFontSize
     );
 
     wrapper.style.setProperty(
