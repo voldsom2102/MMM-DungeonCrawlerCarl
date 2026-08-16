@@ -12,7 +12,8 @@ Module.register("MMM-DungeonCrawlerCarl", {
         quoteFontSize: "32px",
         characterFontSize: "22px",
         bookFontSize: "18px",
-        lineHeight: "1.4"
+        lineHeight: "1.4",
+        wordWrap: "normal"
     },
 
     getScripts: function () {
@@ -208,6 +209,11 @@ Module.register("MMM-DungeonCrawlerCarl", {
         wrapper.style.setProperty(
             "--dcc-line-height",
             this.config.lineHeight
+        );
+
+        wrapper.style.setProperty(
+            "--dcc-word-wrap",
+            this.config.wordWrap
         );
 
         this.updateQuoteContents(wrapper);
