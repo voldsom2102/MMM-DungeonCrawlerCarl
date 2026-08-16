@@ -1,7 +1,17 @@
-const DCC_QUOTES = [
+var DCC_QUOTES = [
     {
         text: "Goddammit Donut!",
         character: "Carl",
         book: "Dungeon Crawler Carl"
+    },
+    {
+        text: "He screamed, right in my fucking face",
+        character: "Carl",
+        book: "Dungeon Crawler Carl"
+    },
+    {
+        text: "Mongo is appaled",
+        character: "Donut",
+        book: "The Butcher's Masqurade"
     }
 ];
