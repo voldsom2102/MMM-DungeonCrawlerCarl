@@ -137,11 +137,59 @@ updateQuoteContents: function (wrapper) {
 },
 
 getAvailableQuotes: function () {
+    // Make sure we have quotes
+    if (!DCC_QUOTES || DCC_QUOTES.length === 0) {
+        Log.error(
+            "MMM-DungeonCrawlerCarl: No quotes found in quote.js."
+        );
 
+        return [];
+    }
+
+    // Convert maxBook to a number
+    var maxBook = Number(this.config.maxBook);
+
+    // If maxBook is invalid, default to Book 1
+    if (!Number.isFinite(maxBook) || maxBook < 1) {
+        Log.warn(
+            "MMM-DungeonCrawlerCarl: Invalid maxBook value. Defaulting to Book 1."
+        );
+
+        maxBook = 1;
+    }
+
+    // Find the highest book number currently available
+    var highestAvailableBook = DCC_QUOTES.reduce(
+        function (highest, quote) {
+            var bookNumber = Number(quote.bookNumber);
+
+            if (Number.isFinite(bookNumber) && bookNumber > highest) {
+                return bookNumber;
+            }
+
+            return highest;
+        },
+        0
+    );
+
+    // If maxBook is higher than our quote database,
+    // simply use all available books.
+    if (maxBook > highestAvailableBook) {
+        Log.info(
+            "MMM-DungeonCrawlerCarl: maxBook is " +
+            maxBook +
+            ", but quotes are currently available only through Book " +
+            highestAvailableBook +
+            ". Using available quotes."
+        );
+
+        maxBook = highestAvailableBook;
+    }
+
+    // Return quotes from Book 1 through maxBook
     return DCC_QUOTES.filter(function (quote) {
-        return quote.bookNumber <= this.config.maxBook;
-    }, this);
-
+        return Number(quote.bookNumber) <= maxBook;
+    });
 },
 
 getDom: function () {
