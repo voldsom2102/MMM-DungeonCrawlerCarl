@@ -1,7 +1,10 @@
 # MMM-DungeonCrawlerCarl
 
-A [MagicMirror²](https://magicmirror.builders/) module that displays random quotes from the **Dungeon Crawler Carl** book series.
+A Personal [MagicMirror²](https://magicmirror.builders/) module that displays random quotes from the **Dungeon Crawler Carl** book series.
 Quotes are stored locally in `quote.js`, allowing you to easily add, remove, and organize quotes without modifying the module itself.
+
+This is mainly for myself.  If you come across the module and want to install it, go ahead.  I will add quotes as I have time.  If you have suggestions put in an issue or feel free to update your own `quote.js`.
+
 ## Features
 * Displays random Dungeon Crawler Carl quotes
 * Automatically rotates quotes at a configurable interval
