@@ -175,4 +175,4 @@ var DCC_QUOTES = [
         book: "Dungeon Crawler Carl",
         bookNumber: 4
     }
-];
+]; 

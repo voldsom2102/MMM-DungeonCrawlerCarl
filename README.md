@@ -314,10 +314,21 @@ If using PM2:
 pm2 logs mm
 ```
 ## License
-This module is provided as-is for personal use.
-The module itself is not affiliated with or endorsed by the author, publisher, or rights holders of the Dungeon Crawler Carl series.
-**Dungeon Crawler Carl** and related characters and content are the property of their respective rights holders.
-Users are responsible for ensuring that any quotes they add to `quote.js` are used in accordance with applicable copyright law.
+
+The original source code for this module is licensed under the
+[MIT License](LICENSE.md).
+
+The **Dungeon Crawler Carl** series, including its text, characters, names,
+settings, and related intellectual property, is the property of its
+respective rights holders.
+
+This module is an independent fan-made project and is not affiliated with,
+sponsored by, or endorsed by the author, publisher, or rights holders of the
+Dungeon Crawler Carl series.
+
+The quote collection is intended for personal, non-commercial use. Users are
+responsible for ensuring that their use of quoted material complies with
+applicable copyright law.
 
 ## Repository
 The source code for this module is available on GitHub:

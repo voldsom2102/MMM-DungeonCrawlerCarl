@@ -210,11 +210,6 @@ Module.register("MMM-DungeonCrawlerCarl", {
             this.config.lineHeight
         );
 
-        wrapper.style.setProperty(
-            "--dcc-word-wrap",
-            this.config.wordWrap
-        );
-
         this.updateQuoteContents(wrapper);
 
         return wrapper;

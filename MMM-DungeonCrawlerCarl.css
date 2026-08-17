@@ -21,7 +21,8 @@
     margin-bottom: 15px;
 
     white-space: normal;
-    overflow-wrap: var(--dcc-word-wrap);
+    word-break: normal;
+    overflow-wrap: normal;
 }
 
 .dcc-character {
